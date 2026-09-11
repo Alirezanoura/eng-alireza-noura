@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مهارت‌ها | علیرضا نورا</title>
+<meta name="description" content="مهارت‌های علیرضا نورا در برنامه‌نویسی، توسعه وب، هوش مصنوعی و تولید محتوا.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg: #0a0d16;
+    --bg-panel: #10162a;
+    --bg-panel-soft: #0d1220;
+    --accent: #4fd8c4;
+    --accent-2: #7c8fff;
+    --text: #eaf0f6;
+    --text-muted: #93a0b4;
+    --line: #1d2540;
+    --line-soft: #161c30;
+    --radius: 10px;
+    --container: 1160px;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Vazirmatn', Tahoma, sans-serif;
+    line-height:1.8;
+    overflow-x:hidden;
+  }
+
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    background:
+      radial-gradient(ellipse 700px 500px at 85% -5%, rgba(124,143,255,0.10), transparent 60%),
+      radial-gradient(ellipse 600px 500px at 5% 20%, rgba(79,216,196,0.08), transparent 60%);
+  }
+
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-3;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:.35;
+    mask-image: radial-gradient(ellipse 100% 60% at 50% 0%, black 0%, transparent 75%);
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  ul{ list-style:none; }
+  section{ position:relative; }
+
+  .container{
+    max-width:var(--container);
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  :focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:13px 26px;
+    font-family:inherit;
+    font-size:.96rem;
+    font-weight:600;
+    border-radius:8px;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform .2s ease, border-color .2s ease, background .2s ease, color .2s ease;
+  }
+  .btn-primary{
+    background:var(--accent);
+    color:#08110f;
+  }
+  .btn-primary:hover{ transform:translateY(-2px); background:#63e2d0; }
+  .btn-outline{
+    background:transparent;
+    color:var(--text);
+    border-color:var(--line);
+  }
+  .btn-outline:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    padding:20px 0;
+    transition:background .3s ease, border-color .3s ease, padding .3s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled{
+    background:rgba(10,13,22,0.82);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom-color:var(--line);
+    padding:14px 0;
+  }
+  .nav-wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+  }
+  .logo{
+    font-weight:800;
+    font-size:1.15rem;
+    letter-spacing:.2px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+  }
+  .logo .dot{
+    width:8px; height:8px;
+    border-radius:2px;
+    background:var(--accent);
+    transform:rotate(45deg);
+    flex-shrink:0;
+  }
+  nav ul{
+    display:flex;
+    gap:34px;
+  }
+  nav a{
+    font-size:.95rem;
+    color:var(--text-muted);
+    position:relative;
+    padding:4px 2px;
+    transition:color .2s ease;
+  }
+  nav a:hover, nav a.active{ color:var(--text); }
+  nav a.active::after{ width:100%; }
+  nav a::after{
+    content:"";
+    position:absolute;
+    right:0; bottom:-4px;
+    width:0; height:2px;
+    background:var(--accent);
+    transition:width .25s ease;
+  }
+  nav a:hover::after{ width:100%; }
+
+  .nav-toggle{
+    display:none;
+    flex-direction:column;
+    gap:5px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:6px;
+  }
+  .nav-toggle span{
+    width:22px; height:2px;
+    background:var(--text);
+    border-radius:2px;
+    transition:.25s ease;
+  }
+
+  @keyframes riseIn{
+    from{ opacity:0; transform:translateY(18px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  /* ---------- Page header ---------- */
+  .page-hero{
+    padding:170px 0 60px;
+  }
+  .page-hero .eyebrow-line{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:var(--accent);
+    font-size:.95rem;
+    font-weight:600;
+    margin-bottom:22px;
+    opacity:0;
+    animation:riseIn .7s ease forwards;
+  }
+  .page-hero .eyebrow-line .rule{
+    width:34px; height:1px;
+    background:var(--accent);
+  }
+  .page-hero h1{
+    font-size:clamp(2rem, 4vw, 2.9rem);
+    font-weight:800;
+    margin-bottom:18px;
+    opacity:0;
+    animation:riseIn .8s ease .08s forwards;
+  }
+  .page-hero p{
+    color:var(--text-muted);
+    max-width:60ch;
+    font-size:1.02rem;
+    opacity:0;
+    animation:riseIn .8s ease .16s forwards;
+  }
+
+  /* ---------- Section shell ---------- */
+  .section{ padding:60px 0 100px; }
+  .section-alt{ background:linear-gradient(var(--bg-panel-soft), var(--bg-panel-soft)); }
+
+  /* ---------- Panel / corner-bracket card base ---------- */
+  .panel{
+    position:relative;
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+  }
+  .panel::before, .panel::after{
+    content:"";
+    position:absolute;
+    width:14px; height:14px;
+    border-color:var(--accent);
+    border-style:solid;
+    opacity:.85;
+  }
+  .panel::before{ top:-1px; right:-1px; border-width:2px 2px 0 0; border-radius:0 4px 0 0; }
+  .panel::after{ bottom:-1px; left:-1px; border-width:0 0 2px 2px; border-radius:0 0 0 4px; }
+
+  /* ---------- Skill cards ---------- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:18px;
+  }
+  .skill-card{
+    padding:28px 24px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    transition:border-color .25s ease, transform .25s ease, background .25s ease;
+  }
+  .skill-card:hover{
+    border-color:var(--accent);
+    transform:translateY(-4px);
+    background:var(--bg-panel-soft);
+  }
+  .skill-card .s-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .skill-card .s-icon{
+    width:44px; height:44px;
+    border-radius:9px;
+    background:var(--bg-panel-soft);
+    border:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--accent);
+    font-size:.78rem;
+    font-weight:800;
+    flex-shrink:0;
+  }
+  .s-status{
+    font-size:.74rem;
+    font-weight:700;
+    padding:5px 11px;
+    border-radius:20px;
+    border:1px solid var(--line);
+    color:var(--text-muted);
+    white-space:nowrap;
+  }
+  .s-status.learning{
+    color:var(--accent-2);
+    border-color:rgba(124,143,255,.4);
+  }
+  .s-status.familiar{
+    color:var(--text-muted);
+    border-color:var(--line);
+  }
+  .s-status.practiced{
+    color:var(--accent);
+    border-color:rgba(79,216,196,.4);
+  }
+  .skill-card h3{
+    font-size:1.08rem;
+    font-weight:700;
+  }
+  .skill-card p{
+    color:var(--text-muted);
+    font-size:.92rem;
+  }
+
+  /* ---------- In progress ---------- */
+  .building{
+    text-align:center;
+    padding:70px 40px;
+    background:
+      radial-gradient(ellipse 500px 260px at 50% 0%, rgba(79,216,196,0.10), transparent 70%),
+      var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:16px;
+  }
+  .building h2{
+    font-size:clamp(1.5rem, 2.6vw, 1.9rem);
+    font-weight:700;
+    margin-bottom:14px;
+  }
+  .building p{
+    color:var(--text-muted);
+    max-width:56ch;
+    margin:0 auto 30px;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding:52px 0 34px;
+    border-top:1px solid var(--line);
+    margin-top:40px;
+  }
+  .footer-grid{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  .footer-name{
+    font-weight:800;
+    font-size:1.05rem;
+    margin-bottom:6px;
+  }
+  .footer-sub{
+    color:var(--text-muted);
+    font-size:.88rem;
+  }
+  .footer-copy{
+    color:var(--text-muted);
+    font-size:.82rem;
+  }
+
+  /* ---------- Reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .page-hero .eyebrow-line, .page-hero h1, .page-hero p{ animation:none; opacity:1; }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:980px){
+    .skills-grid{ grid-template-columns:repeat(2, 1fr); }
+  }
+
+  @media (max-width:760px){
+    nav{
+      position:fixed;
+      top:0; left:0; right:0; bottom:0;
+      background:rgba(10,13,22,0.98);
+      backdrop-filter:blur(10px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      opacity:0;
+      visibility:hidden;
+      transition:opacity .25s ease;
+      z-index:99;
+    }
+    nav.open{ opacity:1; visibility:visible; }
+    nav ul{
+      flex-direction:column;
+      text-align:center;
+      gap:30px;
+    }
+    nav a{ font-size:1.3rem; }
+    .nav-toggle{ display:flex; z-index:101; }
+    .nav-toggle.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2){ opacity:0; }
+    .nav-toggle.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+  }
+
+  @media (max-width:600px){
+    .skills-grid{ grid-template-columns:1fr; }
+    .page-hero{ padding:150px 0 44px; text-align:center; }
+    .page-hero .eyebrow-line{ justify-content:center; }
+    .page-hero p{ margin-inline:auto; }
+    .section{ padding:44px 0 72px; }
+    .building{ padding:50px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header id="site-header">
+  <div class="container nav-wrap">
+    <a href="index.html" class="logo"><span class="dot"></span>علیرضا نورا</a>
+
+    <nav id="site-nav">
+      <ul>
+        <li><a href="index.html">خانه</a></li>
+        <li><a href="about.html">درباره من</a></li>
+        <li><a href="skills.html" class="active">مهارت‌ها</a></li>
+        <li><a href="projects.html">پروژه‌ها</a></li>
+        <li><a href="contact.html">ارتباط با من</a></li>
+      </ul>
+    </nav>
+
+    <button class="nav-toggle" id="nav-toggle" aria-label="باز کردن منو" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero container">
+    <div class="eyebrow-line"><span class="rule"></span>توانمندی‌های فنی</div>
+    <h1>مهارت‌های من</h1>
+    <p>مهارت‌هایی که در مسیر مهندسی کامپیوتر و توسعه فناوری در حال یادگیری و تقویت آن‌ها هستم.</p>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section">
+    <div class="container">
+      <div class="skills-grid">
+
+        <div class="skill-card panel">
+          <div class="s-top">
+            <span class="s-icon">HTML</span>
+            <span class="s-status familiar">آشنایی</span>
+          </div>
+          <h3>HTML</h3>
+          <p>آشنایی با ساختار صفحات وب، عناصر HTML و ایجاد ساختار استاندارد برای وب‌سایت‌ها.</p>
+        </div>
+
+        <div class="skill-card panel">
+          <div class="s-top">
+            <span class="s-icon">CSS</span>
+            <span class="s-status familiar">آشنایی</span>
+          </div>
+          <h3>CSS</h3>
+          <p>طراحی رابط کاربری، استایل‌دهی، چیدمان صفحات و ایجاد طراحی‌های واکنش‌گرا.</p>
+        </div>
+
+        <div class="skill-card panel">
+          <div class="s-top">
+            <span class="s-icon">JS</span>
+            <span class="s-status familiar">آشنایی</span>
+          </div>
+          <h3>JavaScript</h3>
+          <p>آشنایی با برنامه‌نویسی سمت کاربر و ایجاد تعامل و قابلیت‌های پویا در صفحات وب.</p>
+        </div>
+
+        <div class="skill-card panel">
+          <div class="s-top">
+            <span class="s-icon">PY</span>
+            <span class="s-status learning">در حال یادگیری</span>
+          </div>
+          <h3>Python</h3>
+          <p>در حال یادگیری و توسعه مهارت‌های برنامه‌نویسی پایتون با تمرکز بر کاربردهای واقعی و هوش مصنوعی.</p>
+        </div>
+
+        <div class="skill-card panel">
+          <div class="s-top">
+            <span class="s-icon">C++</span>
+            <span class="s-status familiar">آشنایی</span>
+          </div>
+          <h3>C++</h3>
+          <p>آشنایی با مفاهیم برنامه‌نویسی و مبانی C++ در مسیر تحصیل مهندسی کامپیوتر.</p>
+        </div>
+
+        <div class="skill-card panel">
+          <div class="s-top">
+            <span class="s-icon">WP</span>
+            <span class="s-status practiced">تجربه عملی</span>
+          </div>
+          <h3>WordPress</h3>
+          <p>تجربه کار با وردپرس، ساخت و مدیریت وب‌سایت و شخصی‌سازی صفحات.</p>
+        </div>
+
+        <div class="skill-card panel">
+          <div class="s-top">
+            <span class="s-icon">AI</span>
+            <span class="s-status learning">در حال یادگیری</span>
+          </div>
+          <h3>Artificial Intelligence</h3>
+          <p>علاقه‌مند به هوش مصنوعی، ابزارهای مولد و کاربردهای AI در تولید محتوا و فناوری.</p>
+        </div>
+
+        <div class="skill-card panel">
+          <div class="s-top">
+            <span class="s-icon">GH</span>
+            <span class="s-status familiar">آشنایی</span>
+          </div>
+          <h3>GitHub</h3>
+          <p>آشنایی با GitHub، مدیریت پروژه‌های کدنویسی و انتشار وب‌سایت‌های استاتیک با GitHub Pages.</p>
+        </div>
+
+        <div class="skill-card panel">
+          <div class="s-top">
+            <span class="s-icon">🎬</span>
+            <span class="s-status practiced">تجربه عملی</span>
+          </div>
+          <h3>Video Editing &amp; Content Creation</h3>
+          <p>تجربه در ویرایش ویدئو و تولید محتوای دیجیتال، به‌ویژه محتوای تبلیغاتی و شبکه‌های اجتماعی.</p>
+        </div>
+
+        <div class="skill-card panel">
+          <div class="s-top">
+            <span class="s-icon">📷</span>
+            <span class="s-status practiced">تجربه عملی</span>
+          </div>
+          <h3>Photography</h3>
+          <p>تجربه چندساله در عکاسی و علاقه‌مندی به تولید محتوای تصویری حرفه‌ای.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- IN PROGRESS -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="building">
+        <h2>در حال توسعه</h2>
+        <p>یادگیری من متوقف نمی‌شود؛ در مسیر مهندسی کامپیوتر، برنامه‌نویسی، هوش مصنوعی و فناوری دائماً در حال یادگیری و ساخت پروژه‌های جدید هستم.</p>
+        <a href="projects.html" class="btn btn-primary">مشاهده پروژه‌ها</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <div class="footer-name">علیرضا نورا</div>
+      <div class="footer-sub">Computer Engineering • Web Development • AI &amp; Technology</div>
+    </div>
+    <div class="footer-copy">Designed &amp; Developed by Eng. Alireza Noora © 2026</div>
+  </div>
+</footer>
+
+<script>
+  // Header background on scroll
+  var header = document.getElementById('site-header');
+  function onScroll(){
+    if(window.scrollY > 12){ header.classList.add('scrolled'); }
+    else{ header.classList.remove('scrolled'); }
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  // Mobile nav toggle
+  var toggle = document.getElementById('nav-toggle');
+  var nav = document.getElementById('site-nav');
+  toggle.addEventListener('click', function(){
+    var isOpen = nav.classList.toggle('open');
+    toggle.classList.toggle('open', isOpen);
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  nav.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){
+      nav.classList.remove('open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>

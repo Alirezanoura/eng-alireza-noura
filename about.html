@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>درباره من | علیرضا نورا</title>
+<meta name="description" content="درباره علیرضا نورا - دانشجوی مهندسی کامپیوتر، توسعه‌دهنده وب و علاقه‌مند به هوش مصنوعی و فناوری.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg: #0a0d16;
+    --bg-panel: #10162a;
+    --bg-panel-soft: #0d1220;
+    --accent: #4fd8c4;
+    --accent-2: #7c8fff;
+    --text: #eaf0f6;
+    --text-muted: #93a0b4;
+    --line: #1d2540;
+    --line-soft: #161c30;
+    --radius: 10px;
+    --container: 1160px;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Vazirmatn', Tahoma, sans-serif;
+    line-height:1.8;
+    overflow-x:hidden;
+  }
+
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    background:
+      radial-gradient(ellipse 700px 500px at 85% -5%, rgba(124,143,255,0.10), transparent 60%),
+      radial-gradient(ellipse 600px 500px at 5% 20%, rgba(79,216,196,0.08), transparent 60%);
+  }
+
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-3;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:.35;
+    mask-image: radial-gradient(ellipse 100% 60% at 50% 0%, black 0%, transparent 75%);
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  ul{ list-style:none; }
+  section{ position:relative; }
+
+  .container{
+    max-width:var(--container);
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  :focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:13px 26px;
+    font-family:inherit;
+    font-size:.96rem;
+    font-weight:600;
+    border-radius:8px;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform .2s ease, border-color .2s ease, background .2s ease, color .2s ease;
+  }
+  .btn-primary{
+    background:var(--accent);
+    color:#08110f;
+  }
+  .btn-primary:hover{ transform:translateY(-2px); background:#63e2d0; }
+  .btn-outline{
+    background:transparent;
+    color:var(--text);
+    border-color:var(--line);
+  }
+  .btn-outline:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    padding:20px 0;
+    transition:background .3s ease, border-color .3s ease, padding .3s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled{
+    background:rgba(10,13,22,0.82);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom-color:var(--line);
+    padding:14px 0;
+  }
+  .nav-wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+  }
+  .logo{
+    font-weight:800;
+    font-size:1.15rem;
+    letter-spacing:.2px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+  }
+  .logo .dot{
+    width:8px; height:8px;
+    border-radius:2px;
+    background:var(--accent);
+    transform:rotate(45deg);
+    flex-shrink:0;
+  }
+  nav ul{
+    display:flex;
+    gap:34px;
+  }
+  nav a{
+    font-size:.95rem;
+    color:var(--text-muted);
+    position:relative;
+    padding:4px 2px;
+    transition:color .2s ease;
+  }
+  nav a:hover, nav a.active{ color:var(--text); }
+  nav a.active::after{ width:100%; }
+  nav a::after{
+    content:"";
+    position:absolute;
+    right:0; bottom:-4px;
+    width:0; height:2px;
+    background:var(--accent);
+    transition:width .25s ease;
+  }
+  nav a:hover::after{ width:100%; }
+
+  .nav-toggle{
+    display:none;
+    flex-direction:column;
+    gap:5px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:6px;
+  }
+  .nav-toggle span{
+    width:22px; height:2px;
+    background:var(--text);
+    border-radius:2px;
+    transition:.25s ease;
+  }
+
+  @keyframes riseIn{
+    from{ opacity:0; transform:translateY(18px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  /* ---------- Page header ---------- */
+  .page-hero{
+    padding:170px 0 60px;
+  }
+  .page-hero .eyebrow-line{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:var(--accent);
+    font-size:.95rem;
+    font-weight:600;
+    margin-bottom:22px;
+    opacity:0;
+    animation:riseIn .7s ease forwards;
+  }
+  .page-hero .eyebrow-line .rule{
+    width:34px; height:1px;
+    background:var(--accent);
+  }
+  .page-hero h1{
+    font-size:clamp(2rem, 4vw, 2.9rem);
+    font-weight:800;
+    margin-bottom:10px;
+    opacity:0;
+    animation:riseIn .8s ease .08s forwards;
+  }
+  .page-hero .name{
+    font-size:clamp(1.3rem, 2.4vw, 1.6rem);
+    font-weight:700;
+    color:var(--text);
+    margin-bottom:10px;
+    opacity:0;
+    animation:riseIn .8s ease .14s forwards;
+  }
+  .page-hero .role-line{
+    color:var(--text-muted);
+    font-size:1rem;
+    max-width:64ch;
+    opacity:0;
+    animation:riseIn .8s ease .2s forwards;
+  }
+
+  /* ---------- Section shell ---------- */
+  .section{ padding:60px 0 100px; }
+  .section-alt{ background:linear-gradient(var(--bg-panel-soft), var(--bg-panel-soft)); }
+  .section-head{
+    max-width:640px;
+    margin-bottom:44px;
+  }
+  .section-head h2{
+    font-size:clamp(1.5rem, 2.6vw, 1.9rem);
+    font-weight:700;
+    margin-bottom:12px;
+  }
+  .section-head p{
+    color:var(--text-muted);
+    font-size:1rem;
+  }
+
+  /* ---------- Panel / corner-bracket card base ---------- */
+  .panel{
+    position:relative;
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+  }
+  .panel::before, .panel::after{
+    content:"";
+    position:absolute;
+    width:14px; height:14px;
+    border-color:var(--accent);
+    border-style:solid;
+    opacity:.85;
+  }
+  .panel::before{ top:-1px; right:-1px; border-width:2px 2px 0 0; border-radius:0 4px 0 0; }
+  .panel::after{ bottom:-1px; left:-1px; border-width:0 0 2px 2px; border-radius:0 0 0 4px; }
+
+  /* ---------- Bio ---------- */
+  .bio-panel{
+    padding:40px 36px;
+  }
+  .bio-panel p{
+    color:var(--text-muted);
+    font-size:1.02rem;
+    max-width:74ch;
+  }
+  .bio-panel p + p{ margin-top:18px; }
+
+  /* ---------- Interests ---------- */
+  .interests-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:16px;
+  }
+  .interest-card{
+    padding:26px 18px;
+    text-align:center;
+    font-weight:600;
+    font-size:.98rem;
+    transition:border-color .25s ease, transform .25s ease, background .25s ease;
+  }
+  .interest-card:hover{
+    border-color:var(--accent);
+    transform:translateY(-4px);
+    background:var(--bg-panel-soft);
+  }
+  .interest-card .i-icon{
+    width:34px; height:34px;
+    margin:0 auto 14px;
+    border-radius:8px;
+    background:var(--bg-panel-soft);
+    border:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--accent);
+    font-size:1rem;
+  }
+
+  /* ---------- Timeline ---------- */
+  .timeline{
+    position:relative;
+    padding-inline-start:0;
+  }
+  .timeline-item{
+    position:relative;
+    display:flex;
+    gap:20px;
+    padding-bottom:34px;
+    padding-inline-end:6px;
+  }
+  .timeline-item:last-child{ padding-bottom:0; }
+  .timeline-marker{
+    position:relative;
+    flex-shrink:0;
+    width:34px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .timeline-marker .dot{
+    width:12px; height:12px;
+    border-radius:3px;
+    background:var(--bg);
+    border:2px solid var(--accent);
+    transform:rotate(45deg);
+    flex-shrink:0;
+  }
+  .timeline-marker .line{
+    flex-grow:1;
+    width:1px;
+    background:var(--line);
+    margin-top:6px;
+  }
+  .timeline-item:last-child .timeline-marker .line{ display:none; }
+  .timeline-content{
+    padding-top:2px;
+  }
+  .timeline-content .t-index{
+    color:var(--accent);
+    font-weight:700;
+    font-size:.82rem;
+    margin-bottom:4px;
+  }
+  .timeline-content .t-text{
+    font-weight:600;
+    font-size:1.02rem;
+  }
+
+  /* ---------- Philosophy ---------- */
+  .philosophy{
+    text-align:center;
+    padding:70px 40px;
+    background:
+      radial-gradient(ellipse 500px 260px at 50% 0%, rgba(124,143,255,0.12), transparent 70%),
+      var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:16px;
+  }
+  .philosophy p{
+    font-size:clamp(1.1rem, 2.2vw, 1.4rem);
+    font-weight:600;
+    max-width:44ch;
+    margin:0 auto;
+    line-height:1.9;
+  }
+  .philosophy p .hl{ color:var(--accent); }
+
+  /* ---------- CTA ---------- */
+  .cta{
+    text-align:center;
+    padding:90px 40px;
+    background:
+      radial-gradient(ellipse 500px 260px at 50% 0%, rgba(79,216,196,0.10), transparent 70%),
+      var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:16px;
+  }
+  .cta h2{
+    font-size:clamp(1.6rem, 3vw, 2.2rem);
+    font-weight:700;
+    margin-bottom:14px;
+  }
+  .cta p{
+    color:var(--text-muted);
+    max-width:52ch;
+    margin:0 auto 32px;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding:52px 0 34px;
+    border-top:1px solid var(--line);
+    margin-top:40px;
+  }
+  .footer-grid{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  .footer-name{
+    font-weight:800;
+    font-size:1.05rem;
+    margin-bottom:6px;
+  }
+  .footer-sub{
+    color:var(--text-muted);
+    font-size:.88rem;
+  }
+  .footer-copy{
+    color:var(--text-muted);
+    font-size:.82rem;
+  }
+
+  /* ---------- Reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .page-hero .eyebrow-line, .page-hero h1, .page-hero .name, .page-hero .role-line{ animation:none; opacity:1; }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:820px){
+    .interests-grid{ grid-template-columns:repeat(2, 1fr); }
+  }
+
+  @media (max-width:760px){
+    nav{
+      position:fixed;
+      top:0; left:0; right:0; bottom:0;
+      background:rgba(10,13,22,0.98);
+      backdrop-filter:blur(10px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      opacity:0;
+      visibility:hidden;
+      transition:opacity .25s ease;
+      z-index:99;
+    }
+    nav.open{ opacity:1; visibility:visible; }
+    nav ul{
+      flex-direction:column;
+      text-align:center;
+      gap:30px;
+    }
+    nav a{ font-size:1.3rem; }
+    .nav-toggle{ display:flex; z-index:101; }
+    .nav-toggle.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2){ opacity:0; }
+    .nav-toggle.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+  }
+
+  @media (max-width:600px){
+    .interests-grid{ grid-template-columns:1fr; }
+    .page-hero{ padding:150px 0 44px; text-align:center; }
+    .page-hero .eyebrow-line{ justify-content:center; }
+    .page-hero .role-line{ margin-inline:auto; }
+    .section{ padding:44px 0 72px; }
+    .bio-panel{ padding:30px 22px; }
+    .philosophy, .cta{ padding:50px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header id="site-header">
+  <div class="container nav-wrap">
+    <a href="index.html" class="logo"><span class="dot"></span>علیرضا نورا</a>
+
+    <nav id="site-nav">
+      <ul>
+        <li><a href="index.html">خانه</a></li>
+        <li><a href="about.html" class="active">درباره من</a></li>
+        <li><a href="skills.html">مهارت‌ها</a></li>
+        <li><a href="projects.html">پروژه‌ها</a></li>
+        <li><a href="contact.html">ارتباط با من</a></li>
+      </ul>
+    </nav>
+
+    <button class="nav-toggle" id="nav-toggle" aria-label="باز کردن منو" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero container">
+    <div class="eyebrow-line"><span class="rule"></span>درباره من</div>
+    <h1>علیرضا نورا</h1>
+    <p class="name">دانشجوی مهندسی کامپیوتر | توسعه‌دهنده وب | علاقه‌مند به هوش مصنوعی و فناوری</p>
+  </section>
+
+  <!-- BIO -->
+  <section class="section">
+    <div class="container">
+      <div class="bio-panel panel">
+        <p>من علیرضا نورا هستم، دانشجوی مهندسی کامپیوتر و علاقه‌مند به دنیای برنامه‌نویسی، توسعه وب، هوش مصنوعی و فناوری.</p>
+        <p>مسیر من در حوزه کامپیوتر از یادگیری و کار با فناوری‌های مختلف آغاز شده و در حال حاضر در رشته مهندسی کامپیوتر به شکل دانشگاهی این مسیر را ادامه می‌دهم.</p>
+        <p>به یادگیری عملی علاقه زیادی دارم و ترجیح می‌دهم دانش خود را با ساخت پروژه‌های واقعی، تجربه و حل مسئله تقویت کنم.</p>
+        <p>هدف من این است که در کنار تحصیلات دانشگاهی، مهارت‌های فنی خود را به سطح حرفه‌ای برسانم و در آینده در زمینه فناوری و هوش مصنوعی فعالیت تخصصی داشته باشم.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERESTS -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <h2>علاقه‌مندی‌های من</h2>
+      </div>
+
+      <div class="interests-grid">
+        <div class="interest-card panel"><span class="i-icon">💻</span>برنامه‌نویسی</div>
+        <div class="interest-card panel"><span class="i-icon">🌐</span>توسعه وب</div>
+        <div class="interest-card panel"><span class="i-icon">🤖</span>هوش مصنوعی</div>
+        <div class="interest-card panel"><span class="i-icon">🖥️</span>فناوری اطلاعات</div>
+        <div class="interest-card panel"><span class="i-icon">📡</span>یادگیری فناوری‌های جدید</div>
+        <div class="interest-card panel"><span class="i-icon">🛠️</span>ساخت پروژه‌های واقعی</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CURRENT PATH -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>مسیر فعلی من</h2>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker"><span class="dot"></span><span class="line"></span></div>
+          <div class="timeline-content">
+            <div class="t-index">۰۱</div>
+            <div class="t-text">یادگیری و تجربه در حوزه کامپیوتر</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker"><span class="dot"></span><span class="line"></span></div>
+          <div class="timeline-content">
+            <div class="t-index">۰۲</div>
+            <div class="t-text">تحصیل در رشته مهندسی کامپیوتر</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker"><span class="dot"></span><span class="line"></span></div>
+          <div class="timeline-content">
+            <div class="t-index">۰۳</div>
+            <div class="t-text">توسعه مهارت‌های برنامه‌نویسی و وب</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker"><span class="dot"></span><span class="line"></span></div>
+          <div class="timeline-content">
+            <div class="t-index">۰۴</div>
+            <div class="t-text">یادگیری و تجربه در حوزه هوش مصنوعی</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker"><span class="dot"></span></div>
+          <div class="timeline-content">
+            <div class="t-index">۰۵</div>
+            <div class="t-text">ساخت پروژه‌های واقعی و توسعه مسیر حرفه‌ای</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="philosophy">
+        <p>هدف فقط داشتن <span class="hl">مدرک</span> نیست؛ هدف من تبدیل دانش به توانایی واقعی و ساختن پروژه‌هایی است که بتوانم با افتخار ارائه کنم.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h2>با من در ارتباط باشید</h2>
+        <p>اگر درباره همکاری، پروژه یا حوزه‌های فناوری و برنامه‌نویسی علاقه‌مند به گفتگو هستید، می‌توانید با من در ارتباط باشید.</p>
+        <a href="contact.html" class="btn btn-primary">ارتباط با من</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <div class="footer-name">علیرضا نورا</div>
+      <div class="footer-sub">Computer Engineering • Web Development • AI &amp; Technology</div>
+    </div>
+    <div class="footer-copy">Designed &amp; Developed by Eng. Alireza Noora © 2026</div>
+  </div>
+</footer>
+
+<script>
+  // Header background on scroll
+  var header = document.getElementById('site-header');
+  function onScroll(){
+    if(window.scrollY > 12){ header.classList.add('scrolled'); }
+    else{ header.classList.remove('scrolled'); }
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  // Mobile nav toggle
+  var toggle = document.getElementById('nav-toggle');
+  var nav = document.getElementById('site-nav');
+  toggle.addEventListener('click', function(){
+    var isOpen = nav.classList.toggle('open');
+    toggle.classList.toggle('open', isOpen);
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  nav.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){
+      nav.classList.remove('open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>
