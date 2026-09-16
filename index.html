@@ -486,11 +486,48 @@
     font-size:.82rem;
   }
 
+  /* ---------- Music toggle ---------- */
+  .music-toggle{
+    position:fixed;
+    left:20px;
+    bottom:20px;
+    z-index:90;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 10px 26px rgba(0,0,0,.35);
+    transition:border-color .25s ease, transform .2s ease, background .25s ease;
+  }
+  .music-toggle:hover{ border-color:var(--accent); transform:translateY(-2px); }
+  .music-toggle svg{ width:19px; height:19px; }
+  .music-toggle.playing{ border-color:var(--accent); }
+  .music-toggle.playing::after{
+    content:"";
+    position:absolute;
+    inset:-5px;
+    border-radius:50%;
+    border:1px solid var(--accent);
+    opacity:.5;
+    animation:pulseRing 1.8s ease-out infinite;
+  }
+  @keyframes pulseRing{
+    0%{ transform:scale(.9); opacity:.5; }
+    100%{ transform:scale(1.3); opacity:0; }
+  }
+
   /* ---------- Reduced motion ---------- */
   @media (prefers-reduced-motion: reduce){
     html{ scroll-behavior:auto; }
     .hero-text, .hero-visual{ animation:none; opacity:1; }
     .circuit-svg path, .circuit-svg circle{ animation:none; stroke-dashoffset:0; opacity:.6; }
+    .music-toggle.playing::after{ animation:none; }
   }
 
   /* ---------- Responsive ---------- */
@@ -566,6 +603,12 @@
     </button>
   </div>
 </header>
+
+<audio id="bg-audio" src="./assets/yar-remix.mp3" loop preload="auto"></audio>
+<button id="music-toggle" class="music-toggle" type="button" aria-label="پخش موسیقی" aria-pressed="false">
+  <svg id="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+  <svg id="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+</button>
 
 <main>
 
@@ -721,6 +764,51 @@
       toggle.setAttribute('aria-expanded', 'false');
     });
   });
+
+  // Background music
+  (function(){
+    var audio = document.getElementById('bg-audio');
+    var musicBtn = document.getElementById('music-toggle');
+    var iconPlay = document.getElementById('icon-play');
+    var iconPause = document.getElementById('icon-pause');
+
+    function setPlayingUI(isPlaying){
+      iconPlay.style.display = isPlaying ? 'none' : 'block';
+      iconPause.style.display = isPlaying ? 'block' : 'none';
+      musicBtn.classList.toggle('playing', isPlaying);
+      musicBtn.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
+      musicBtn.setAttribute('aria-label', isPlaying ? 'توقف موسیقی' : 'پخش موسیقی');
+    }
+
+    function startOnFirstInteraction(){
+      audio.play().then(function(){ setPlayingUI(true); }).catch(function(){});
+      document.removeEventListener('click', startOnFirstInteraction);
+      document.removeEventListener('touchstart', startOnFirstInteraction);
+      document.removeEventListener('keydown', startOnFirstInteraction);
+    }
+
+    var playPromise = audio.play();
+    if(playPromise !== undefined){
+      playPromise.then(function(){
+        setPlayingUI(true);
+      }).catch(function(){
+        // Autoplay with sound was blocked by the browser; start on the first user interaction instead.
+        setPlayingUI(false);
+        document.addEventListener('click', startOnFirstInteraction, { once:true });
+        document.addEventListener('touchstart', startOnFirstInteraction, { once:true });
+        document.addEventListener('keydown', startOnFirstInteraction, { once:true });
+      });
+    }
+
+    musicBtn.addEventListener('click', function(){
+      if(audio.paused){
+        audio.play().then(function(){ setPlayingUI(true); }).catch(function(){});
+      } else {
+        audio.pause();
+        setPlayingUI(false);
+      }
+    });
+  })();
 </script>
 
 </body>
